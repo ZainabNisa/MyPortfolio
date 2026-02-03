@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Mail, Send, CheckCircle, AlertCircle, Code2 } from 'lucide-react';
+import { Github, Linkedin, Mail, Send, CheckCircle, AlertCircle, Code2 } from 'lucide-react';
 
 const iconMap = {
   github: Github,
   linkedin: Linkedin,
-  twitter: Twitter,
   mail: Mail,
   leetcode: Code2,
 };
@@ -15,41 +14,37 @@ const socialLinks = [
     id: 1,
     platform: 'GitHub',
     icon: 'github',
-    url: 'https://github.com/yourusername',
+    url: 'https://github.com/ZainabNisa',
     color: 'from-gray-700 to-gray-900',
     colorDark: 'dark:from-gray-600 dark:to-gray-800',
+    isEmail: false,
   },
   {
     id: 2,
     platform: 'LinkedIn',
     icon: 'linkedin',
-    url: 'https://linkedin.com/in/yourusername',
+    url: 'https://www.linkedin.com/in/zainab-nisa-j-32b87b275/',
     color: 'from-blue-600 to-blue-800',
     colorDark: 'dark:from-blue-500 dark:to-blue-700',
+    isEmail: false,
   },
   {
     id: 3,
     platform: 'LeetCode',
     icon: 'leetcode',
-    url: 'https://leetcode.com/yourusername',
+    url: 'https://leetcode.com/u/zainabnisa2009/',
     color: 'from-yellow-600 to-orange-600',
     colorDark: 'dark:from-yellow-500 dark:to-orange-500',
+    isEmail: false,
   },
   {
     id: 4,
-    platform: 'Twitter',
-    icon: 'twitter',
-    url: 'https://twitter.com/yourusername',
-    color: 'from-sky-500 to-blue-600',
-    colorDark: 'dark:from-sky-400 dark:to-blue-500',
-  },
-  {
-    id: 5,
     platform: 'Email',
     icon: 'mail',
-    url: 'mailto:your.email@example.com',
+    url: 'zainabnisa2009@gmail.com',
     color: 'from-purple-600 to-pink-600',
     colorDark: 'dark:from-purple-500 dark:to-pink-500',
+    isEmail: true,
   },
 ];
 
@@ -61,6 +56,11 @@ export const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleEmailClick = (email: string) => {
+    // Open Gmail compose with pre-filled email
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank');
+  };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -75,30 +75,34 @@ export const Contact = () => {
     setSubmitStatus('idle');
 
     try {
-      // Create mailto link with form data
-      const subject = encodeURIComponent(`Portfolio Contact: ${formData.name}`);
-      const body = encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-      );
-      const mailtoLink = `mailto:your.email@example.com?subject=${subject}&body=${body}`;
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: '3f7e6998-a910-4434-90bb-83c3508daee9',
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          subject: `New Portfolio Contact from ${formData.name}`,
+          from_name: 'Portfolio Contact Form',
+        }),
+      });
 
-      // Open default email client
-      window.location.href = mailtoLink;
+      const data = await response.json();
 
-      // Simulate delay for UX
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-
-      setTimeout(() => {
-        setSubmitStatus('idle');
-      }, 5000);
+      if (data.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      } else {
+        throw new Error('Failed to send message');
+      }
     } catch (error) {
+      console.error('Error sending message:', error);
       setSubmitStatus('error');
-      setTimeout(() => {
-        setSubmitStatus('idle');
-      }, 5000);
+      setTimeout(() => setSubmitStatus('idle'), 5000);
     } finally {
       setIsSubmitting(false);
     }
@@ -161,6 +165,45 @@ export const Contact = () => {
             <div className="space-y-4">
               {socialLinks.map((link, index) => {
                 const Icon = iconMap[link.icon.toLowerCase() as keyof typeof iconMap] || Mail;
+                
+                if (link.isEmail) {
+                  return (
+                    <motion.button
+                      key={link.id}
+                      onClick={() => handleEmailClick(link.url)}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      whileHover={{ x: 10, scale: 1.02 }}
+                      className="w-full flex items-center gap-4 p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-transparent hover:shadow-lg transition-all group"
+                    >
+                      <motion.div
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                        className={`p-3 bg-gradient-to-br ${link.color} ${link.colorDark} rounded-xl shadow-md`}
+                      >
+                        <Icon size={24} className="text-white" />
+                      </motion.div>
+                      <div className="flex-1 text-left">
+                        <span className="text-lg font-semibold text-gray-900 dark:text-gray-50 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors block">
+                          {link.platform}
+                        </span>
+                        <span className="text-sm text-gray-600 dark:text-gray-400">
+                          {link.url}
+                        </span>
+                      </div>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        className="text-gray-400 dark:text-gray-600"
+                      >
+                        →
+                      </motion.div>
+                    </motion.button>
+                  );
+                }
+                
                 return (
                   <motion.a
                     key={link.id}
@@ -301,7 +344,7 @@ export const Contact = () => {
                       transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                       className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                     />
-                    Opening Email Client...
+                    Sending...
                   </>
                 ) : (
                   <>
@@ -321,7 +364,7 @@ export const Contact = () => {
                 >
                   <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                   <p className="text-sm font-medium text-green-700 dark:text-green-300">
-                    Email client opened! Please send the message from your email app.
+                    Message sent successfully! I'll get back to you soon.
                   </p>
                 </motion.div>
               )}
@@ -336,7 +379,7 @@ export const Contact = () => {
                 >
                   <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
                   <p className="text-sm font-medium text-red-700 dark:text-red-300">
-                    Please fill in all fields before sending.
+                    Failed to send message. Please try again or email directly.
                   </p>
                 </motion.div>
               )}

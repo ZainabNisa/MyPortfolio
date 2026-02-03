@@ -8,7 +8,7 @@ type ExperienceType = {
   start_date: string;
   end_date?: string;
   location?: string;
-  description: string;
+  description: string[];
   colors: {
     accent: string;
     accentLight: string;
@@ -26,12 +26,16 @@ type ExperienceType = {
 const experiences: ExperienceType[] = [
   {
     id: 1,
-    position: 'Java Developer Intern',
+    position: 'Java Development Intern',
     company: 'Infosys Springboard',
     start_date: '2025-12-01',
     location: 'Remote',
-    description:
-      'Developing Java-based applications following enterprise coding standards. Working with Spring Boot to build scalable backend solutions and REST APIs.',
+    description: [
+      'Learned API versioning and implemented REST endpoints.',
+      'Developed CRUD operations with PATCH method support and implemented soft delete functionality.',
+      'Gained hands-on experience in dependency management, content negotiation and Spring Beans.',
+      'Prepared and tested multiple API endpoints ensuring proper request/response handling.',
+    ],
     colors: {
       accent: 'text-blue-600',
       accentLight: 'bg-blue-50',
@@ -47,12 +51,16 @@ const experiences: ExperienceType[] = [
   },
   {
     id: 2,
-    position: 'Web Developer Intern',
+    position: 'Web Development Intern',
     company: 'Empower Guiding Center',
     start_date: '2024-02-01',
     end_date: '2024-03-01',
-    description:
-      'Developed a responsive restaurant web application using HTML, CSS, and JavaScript, improving usability across mobile and desktop devices.',
+    location: 'Remote',
+    description: [
+      'Designed and developed responsive landing pages using HTML and CSS.',
+      'Implemented modern UI/UX principles to create visually appealing and user-friendly interfaces.',
+      'Collaborated with the team to ensure design consistency and responsive layouts across different devices.',
+    ],
     colors: {
       accent: 'text-purple-600',
       accentLight: 'bg-purple-50',
@@ -182,16 +190,21 @@ export const Experience = () => {
                     )}
                   </motion.div>
 
-                  {/* Description */}
-                  <motion.p
+                  {/* Description - Bullet Points */}
+                  <motion.ul
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.2 + 0.7 }}
-                    className="text-base text-gray-700 dark:text-gray-300 leading-relaxed"
+                    className="space-y-2 text-base text-gray-700 dark:text-gray-300 leading-relaxed"
                   >
-                    {exp.description}
-                  </motion.p>
+                    {exp.description.map((point, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className={`mt-1.5 w-1.5 h-1.5 rounded-full ${exp.colors.iconBg} ${exp.colors.border} flex-shrink-0`} />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </motion.ul>
                 </motion.div>
               </motion.div>
             ))}

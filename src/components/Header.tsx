@@ -6,7 +6,7 @@ import { useTheme } from '../contexts/ThemeContext';
 export const Header = () => {
   const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('about');
+  const [activeSection, setActiveSection] = useState('hero');
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -18,7 +18,7 @@ export const Header = () => {
   };
 
   const menuItems = [
-    { id: 'about', label: 'About' },
+    { id: 'hero', label: 'About' },
     { id: 'skills', label: 'Skills' },
     { id: 'projects', label: 'Projects' },
     { id: 'experience', label: 'Experience' },
@@ -29,14 +29,9 @@ export const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 font-inter">
       <nav className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between">
-        
-        {/* Logo / Name */}
-        <div className="text-xl font-bold text-gray-900 dark:text-white mb-2 md:mb-0">
-          Zainab Portfolio
-        </div>
 
         {/* Desktop Menu - Pill Nav */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3 w-full justify-center">
           <div className="flex items-center gap-1 p-1.5 rounded-full bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200/50 dark:border-gray-700/50">
             {menuItems.map((item) => (
               <button
@@ -63,7 +58,7 @@ export const Header = () => {
         </div>
 
         {/* Mobile Menu */}
-        <div className="flex md:hidden items-center gap-3">
+        <div className="flex md:hidden items-center gap-3 w-full justify-end">
           <button
             onClick={toggleTheme}
             className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-blue-500 hover:text-white hover:scale-110 hover:rotate-12 transition-all duration-300"

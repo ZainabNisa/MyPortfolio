@@ -3,6 +3,7 @@ import React from "react";
 import { TypeAnimation } from "react-type-animation";
 import { Download, Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
+import logo from '../asset/portfolio logo.png';
 
 // Floating orb component
 const Orb = ({ size = 200, color = "rgba(59,130,246,0.3)", x = 0, y = 0, speed = 20 }) => (
@@ -16,8 +17,9 @@ const Orb = ({ size = 200, color = "rgba(59,130,246,0.3)", x = 0, y = 0, speed =
 
 export const Hero = () => {
   return (
-    <section className="relative w-full min-h-screen bg-white dark:bg-gray-900 overflow-hidden transition-colors duration-500 flex items-center justify-center px-6 md:px-12">
-      
+    <section id="hero" className="relative w-full min-h-screen bg-white dark:bg-gray-900 overflow-hidden transition-colors duration-500 flex items-center justify-center px-6 md:px-12">
+    
+
       {/* Floating Orbs */}
       <Orb size={300} color="rgba(59,130,246,0.4)" x={50} y={100} speed={30} />
       <Orb size={200} color="rgba(16,185,129,0.3)" x={500} y={200} speed={20} />
@@ -38,7 +40,7 @@ export const Hero = () => {
 
           <TypeAnimation
             sequence={[
-              "Aspiring Full Stack Developer", 2000,
+              "Aspiring Java Developer", 2000,
               "AI/ML Enthusiast", 2000,
             ]}
             wrapper="h3"
@@ -50,21 +52,21 @@ export const Hero = () => {
           {/* Resume & Social Icons */}
           <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
             <a
-              href="/resume.pdf"
+              href="https://drive.google.com/file/d/1UTJt6uWv4FQ_6NJhmjc-5_E7sQNQ4CpC/view?usp=drive_link"
               download
               className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg transition"
             >
               <Download size={20} /> Resume
             </a>
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/ZainabNisa"
               target="_blank"
               className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition"
             >
               <Github size={30} />
             </a>
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/zainab-nisa-j-32b87b275/"
               target="_blank"
               className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition"
             >
@@ -75,7 +77,7 @@ export const Hero = () => {
           {/* Unique Quote */}
           <TypeAnimation
             sequence={[
-              `"Code is my canvas, AI is my brush."`, 5000,
+              "Turning complexity into intelligent simplicity.", 5000,
             ]}
             wrapper="p"
             cursor={true}
@@ -89,9 +91,9 @@ export const Hero = () => {
           <div className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg px-6 py-6 font-mono text-left shadow-xl overflow-x-auto">
             <TypeAnimation
               sequence={[
-                `public class Skills {\n  public static void main(String[] args) {\n    String[] skills = {"Java", "Spring Boot", "React", "Node.js", "Python"};\n    for(String skill : skills) {\n      System.out.println(skill);\n    }\n  }\n}`, 5000,
+                `public class Skills {\n  public static void main(String[] args) {\n    String[] skills = {"Java", "Spring Boot", "MySQL", "C#", "React(Basics)"};\n    for(String skill : skills) {\n      System.out.println(skill);\n    }\n  }\n}`, 5000,
               ]}
-              wrapper="pre"
+              
               cursor={true}
               repeat={Infinity}
               className="whitespace-pre-wrap"

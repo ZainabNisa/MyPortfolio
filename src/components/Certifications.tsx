@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Award, ExternalLink, Calendar, Sparkles } from 'lucide-react';
+import { Award, ExternalLink, Calendar, Sparkles, GraduationCap, BookOpen } from 'lucide-react';
 
 interface Certification {
   id: number;
@@ -8,6 +8,15 @@ interface Certification {
   issue_date: string;
   category: string;
   credential_url: string;
+}
+
+interface Education {
+  id: number;
+  degree: string;
+  institution: string;
+  duration: string;
+  cgpa?: string;
+  description?: string;
 }
 
 const certifications: Certification[] = [
@@ -85,6 +94,24 @@ const certifications: Certification[] = [
   },
 ];
 
+const education: Education[] = [
+  {
+    id: 1,
+    degree: 'B.Tech in Information Technology',
+    institution: 'Meenakshi Sundararajan Engineering College, Chennai',
+    duration: '2022 - 2026',
+    cgpa: '8.92/10',
+    description: 'Specialized in software development, data structures, algorithms, and full-stack technologies'
+  },
+  {
+    id: 2,
+    degree: 'Hindi Language Proficiency',
+    institution: 'Dakshin Bharat Hindi Prachar Sabha',
+    duration: 'Completed 9 Examinations',
+    description: 'Completed: Parichaya, Prathmik, Madhyama, Rashtrabhasha, Praveshika, Visharad Poorvardh, Visharad Uttarardh, Praveen Poorvardh, Praveen Uttarardh'
+  }
+];
+
 const formatDate = (dateString: string) => {
   if (dateString.includes('-')) {
     const date = new Date(dateString);
@@ -158,6 +185,21 @@ const categoryColors: Record<string, {
     borderDark: 'dark:border-orange-800',
     glow: 'shadow-orange-500/20 dark:shadow-orange-500/10',
   },
+};
+
+// Education section colors matching the design theme
+const educationColors = {
+  gradient: 'from-indigo-500/5 via-violet-500/5 to-indigo-500/5',
+  gradientDark: 'dark:from-indigo-500/10 dark:via-violet-500/10 dark:to-indigo-500/10',
+  accent: 'text-indigo-600',
+  accentDark: 'dark:text-indigo-400',
+  iconBg: 'bg-indigo-100',
+  iconBgDark: 'dark:bg-indigo-950/50',
+  iconColor: 'text-indigo-600',
+  iconColorDark: 'dark:text-indigo-400',
+  border: 'border-indigo-200',
+  borderDark: 'dark:border-indigo-800',
+  glow: 'shadow-indigo-500/20 dark:shadow-indigo-500/10',
 };
 
 export const Certifications = () => {
@@ -346,6 +388,141 @@ export const Certifications = () => {
             <span>{certifications.length} Certifications Earned</span>
             <Sparkles className="w-5 h-5" />
           </motion.div>
+        </motion.div>
+
+        {/* Education Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="mt-24"
+        >
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-16 text-center"
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center gap-2 mb-6"
+            >
+              <BookOpen className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
+              <motion.div
+                className="w-20 h-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-indigo-500"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: 0.3 }}
+              />
+              <BookOpen className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
+            </motion.div>
+            <h2 className="text-5xl font-semibold text-gray-900 dark:text-gray-50 mb-4">
+              Educational Background
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              Academic excellence and continuous learning journey
+            </p>
+          </motion.div>
+
+          {/* Education Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {education.map((edu, index) => (
+              <motion.div
+                key={edu.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.2,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className={`relative bg-white dark:bg-gray-900 rounded-2xl p-8 border-2 ${educationColors.border} ${educationColors.borderDark} 
+                  bg-gradient-to-br ${educationColors.gradient} ${educationColors.gradientDark}
+                  hover:shadow-xl ${educationColors.glow} transition-all duration-300 group overflow-hidden`}
+              >
+                {/* Animated background gradient on hover */}
+                <motion.div
+                  className={`absolute inset-0 bg-gradient-to-br ${educationColors.gradient.replace('/5', '/10')} ${educationColors.gradientDark.replace('/10', '/20')} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                />
+
+                <div className="relative z-10">
+                  {/* Icon and Duration */}
+                  <div className="flex items-start justify-between mb-6">
+                    <motion.div
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                      className={`p-4 ${educationColors.iconBg} ${educationColors.iconBgDark} rounded-2xl shadow-md`}
+                    >
+                      <GraduationCap className={`w-8 h-8 ${educationColors.iconColor} ${educationColors.iconColorDark}`} />
+                    </motion.div>
+                    
+                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                      <Calendar className="w-4 h-4" />
+                      <span className="font-semibold">{edu.duration}</span>
+                    </div>
+                  </div>
+
+                  {/* Degree Title */}
+                  <h4 className="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-3 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
+                    {edu.degree}
+                  </h4>
+
+                  {/* Institution */}
+                  <div className={`text-lg font-semibold ${educationColors.accent} ${educationColors.accentDark} mb-4`}>
+                    {edu.institution}
+                  </div>
+
+                  {/* CGPA Badge (if available) */}
+                  {edu.cgpa && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.2 + 0.3 }}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-full text-sm font-bold shadow-md mb-4"
+                    >
+                      <Award className="w-4 h-4" />
+                      <span>CGPA: {edu.cgpa}</span>
+                    </motion.div>
+                  )}
+
+                  {/* Description */}
+                  {edu.description && (
+                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mt-4">
+                      {edu.description}
+                    </p>
+                  )}
+                </div>
+
+                {/* Decorative corner accent */}
+                <motion.div
+                  className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${educationColors.gradient.replace('/5', '/20')} ${educationColors.gradientDark.replace('/10', '/30')} rounded-bl-full opacity-50`}
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 0.5 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                />
+
+                {/* Bottom decorative line */}
+                <motion.div
+                  className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-indigo-500 rounded-b-2xl`}
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: index * 0.2 + 0.2 }}
+                />
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

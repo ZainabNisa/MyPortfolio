@@ -100,7 +100,7 @@ const education: Education[] = [
     degree: 'B.Tech in Information Technology',
     institution: 'Meenakshi Sundararajan Engineering College, Chennai',
     duration: '2022 - 2026',
-    cgpa: '8.92/10',
+    cgpa: '9.02/10',
     description: 'Specialized in software development, data structures, algorithms, and full-stack technologies'
   },
   {

@@ -52,7 +52,7 @@ export const Hero = () => {
           {/* Resume & Social Icons */}
           <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
             <a
-              href="https://drive.google.com/file/d/1UTJt6uWv4FQ_6NJhmjc-5_E7sQNQ4CpC/view?usp=drive_link"
+              href="https://drive.google.com/file/d/1AQbVbDFAUEX36GBhJUvVlbWtni3D2N0Y/view?usp=drive_link"
               download
               className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg transition"
             >
